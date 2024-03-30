@@ -4325,7 +4325,7 @@ GameObject:
   - component: {fileID: 430067964}
   - component: {fileID: 430067963}
   - component: {fileID: 430067962}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37101,7 +37101,7 @@ MonoBehaviour:
   cameraPitchLimit: 64
   bobbingFrequency: 8
   bobbingAmount: 0.1
-  gravity: -19.62
+  gravity: -9.81
   groundCheck: {fileID: 2093708456}
   groundDistance: 0.45
   groundMask:
