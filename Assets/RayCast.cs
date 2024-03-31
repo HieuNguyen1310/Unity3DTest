@@ -11,7 +11,7 @@ public class RayCast : MonoBehaviour
 
     RaycastHit hitInfo;
 
-    
+    AppearRayCastTrigger currentTarget;
 
     // Update is called once per frame
     void Update()
@@ -25,16 +25,35 @@ public class RayCast : MonoBehaviour
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitInfo.distance, Color.red);
 
             AppearRayCastTrigger target = hitInfo.transform.GetComponent<AppearRayCastTrigger>();
-            if (target != null)
+              if (target != null)
             {
-                target.Appear();
-            }   
+                // Check if it's a new target or the current one we're keeping active
+                if (target != currentTarget)
+                {
+                    if (currentTarget != null)
+                    {
+                        currentTarget.StopDisableCoroutine();
+                    }
+                    currentTarget = target;
+                }
+
+                // If it's the current target and still being hit, reset the coroutine
+                if (currentTarget == target)
+                {
+                    currentTarget.StartDisableCoroutine();
+                }
+            } 
 
         }
         else
         {
-            Debug.Log("Nothing");
+            // Debug.Log("Nothing");
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * rayLength, Color.green);
+            if (currentTarget != null) 
+            {
+                currentTarget.StartDisableCoroutine();
+            }
+            currentTarget = null;
         }
     }
 }

@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AppearTrigger : MonoBehaviour
+public class DisappearTrigger : MonoBehaviour
 {
     // Start is called before the first frame update
-    public float appearCond = 2.0f;
+    public float disappearCond = 2.0f;
 
     public ColliderCounter colliderCounter;
 
@@ -18,18 +18,18 @@ public class AppearTrigger : MonoBehaviour
     void Start() 
     {
         meshRenderer = GetComponent<MeshRenderer>();
-        meshRenderer.enabled = false;
+        meshRenderer.enabled = true;
 
         meshCollider = GetComponent<MeshCollider>();
-        meshCollider.enabled = false;
+        meshCollider.enabled = true;
     }
     
     void Update()
     {
-        if (colliderCounter.counter >= appearCond)
+        if (colliderCounter.counter >= disappearCond)
         {
-            meshRenderer.enabled = true;
-            meshCollider.enabled = true;
+            meshRenderer.enabled = false;
+            meshCollider.enabled = false;
         }
     }
 }

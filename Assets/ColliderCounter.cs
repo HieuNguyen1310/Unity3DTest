@@ -9,6 +9,9 @@ public class ColliderCounter : MonoBehaviour
     public void Count()
     {
         counter += 1;
+        // Debug.Log(counter);
     }
+
+
  
 }
