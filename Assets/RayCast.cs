@@ -27,6 +27,7 @@ public class RayCast : MonoBehaviour
             AppearRayCastTrigger target = hitInfo.transform.GetComponent<AppearRayCastTrigger>();
               if (target != null)
             {
+                Debug.Log("Target accessed: " + target.name);
                 // Check if it's a new target or the current one we're keeping active
                 if (target != currentTarget)
                 {
@@ -35,6 +36,7 @@ public class RayCast : MonoBehaviour
                         currentTarget.StopDisableCoroutine();
                     }
                     currentTarget = target;
+                    currentTarget.Appear();
                 }
 
                 // If it's the current target and still being hit, reset the coroutine

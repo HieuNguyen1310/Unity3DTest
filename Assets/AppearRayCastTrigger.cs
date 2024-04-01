@@ -17,22 +17,29 @@ public class AppearRayCastTrigger : MonoBehaviour
         meshRenderer = GetComponent<MeshRenderer>();
         meshRenderer.enabled = false;
     }
-    // public void Appear()
-    // {   
-    //     if (!isMeshRendererEnable) 
-    //     {
-    //         // StopCoroutine(DisableAfterDelay(delay));
-    //     meshRenderer.enabled = true;
-    //     isMeshRendererEnable = true;
-    //     // StartCoroutine(DisableAfterDelay(delayTime));
-    //     StartDisableCoroutine();
-    //     }
-    // }
+
+    public void Appear()
+    {   
+        if (!isMeshRendererEnable) 
+        {
+            // StopCoroutine(DisableAfterDelay(delay));
+        meshRenderer.enabled = true;
+        isMeshRendererEnable = true;
+        // StartCoroutine(DisableAfterDelay(delayTime));
+        StartDisableCoroutine();
+
+        Debug.Log("MeshRenderer Enabled!");
+        }
+    }
 
     
 
     public void StartDisableCoroutine()
     {
+         if (disableCoroutine != null)
+        {
+            StopCoroutine(disableCoroutine);
+        }
         disableCoroutine = StartCoroutine(DisableAfterDelay(delayTime));
     }
 
