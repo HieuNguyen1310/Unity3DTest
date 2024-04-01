@@ -12189,7 +12189,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 512
-  delayTime: 5
+  delayTime: 2
 --- !u!64 &827426234
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -16329,7 +16329,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1314988639}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -37482,12 +37482,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b9c811106fb4545ab2bb5077984323, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 10
+  movementSpeed: 7
   mouseSensitivity: 150
   playerCamera: {fileID: 330585546}
-  cameraPitchLimit: 64
-  bobbingFrequency: 8
-  bobbingAmount: 0.1
+  cameraPitchLimit: 60
+  bobbingFrequency: 4.5
+  bobbingAmount: 0.25
+  cameraTiltAmount: 7.5
+  tiltSpeed: 1.4
+  idleBreathingFrequency: 1.4
+  idleBreathingAmount: 0.2
   gravity: -9.81
   groundCheck: {fileID: 2093708456}
   groundDistance: 0.45
