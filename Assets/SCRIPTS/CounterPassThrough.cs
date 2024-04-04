@@ -12,4 +12,12 @@ public class CounterPassThrough : MonoBehaviour
             colliderCounter.Count();
         }
     }
+
+    // private void OnTriggerExit(Collider other)
+    // {
+    //     if (other.name == "Player")
+    //     {
+    //         colliderCounter.ExtractCount();
+    //     }
+    // }
 }

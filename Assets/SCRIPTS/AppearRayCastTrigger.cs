@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AppearRayCastTrigger : MonoBehaviour
 {
-    private MeshRenderer meshRenderer;
+    public MeshRenderer meshRenderer;
     private bool isMeshRendererEnable = false;
 
     [SerializeField] LayerMask layerMask;
@@ -12,15 +12,30 @@ public class AppearRayCastTrigger : MonoBehaviour
     public float delayTime = 5.0f;
 
     private Coroutine disableCoroutine;
+
+    private RayCast rayCastScritps;
+    private bool playerInTrigger = false;
     private void Start()
     {
         meshRenderer = GetComponent<MeshRenderer>();
         meshRenderer.enabled = false;
+
+        // Check Raycast and Trigger enter
+        rayCastScritps = FindAnyObjectByType<RayCast>();
+        if (rayCastScritps != null)
+        {
+            rayCastScritps.OnPlayerTriggerStatedChange += SetPlayerInTrigger;
+        }
+    }
+
+    public void SetPlayerInTrigger(bool inside)
+    {
+        playerInTrigger = inside;
     }
 
     public void Appear()
     {   
-        if (!isMeshRendererEnable) 
+        if (!isMeshRendererEnable && !playerInTrigger) 
         {
             // StopCoroutine(DisableAfterDelay(delay));
         meshRenderer.enabled = true;

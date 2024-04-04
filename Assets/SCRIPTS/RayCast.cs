@@ -13,6 +13,9 @@ public class RayCast : MonoBehaviour
 
     AppearRayCastTrigger currentTarget;
 
+    public delegate void PlayerTriggerState(bool inside);
+    public event PlayerTriggerState OnPlayerTriggerStatedChange;
+
     // Update is called once per frame
     void Update()
     {   
@@ -57,5 +60,12 @@ public class RayCast : MonoBehaviour
             }
             currentTarget = null;
         }
+
+        if (OnPlayerTriggerStatedChange != null)
+        {
+            OnPlayerTriggerStatedChange(currentTarget != null);
+        }
     }
+
+   
 }

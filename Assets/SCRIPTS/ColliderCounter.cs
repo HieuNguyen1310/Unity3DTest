@@ -12,6 +12,11 @@ public class ColliderCounter : MonoBehaviour
         // Debug.Log(counter);
     }
 
+    // public void ExtractCount()
+    // {
+    //     counter -= 1;
+    // }
+
 
  
 }
