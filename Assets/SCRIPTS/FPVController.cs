@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class FirstPersonController : MonoBehaviour
 {
-    public float movementSpeed = 5.0f; // Speed of the character movement
+    public float movementSpeed = 7.0f; // Speed of the character movement
+
+    public float sprintSpeed = 15.0f; // Sprint Speed
+
     public float mouseSensitivity = 100.0f; // Sensitivity of the mouse movement
     public Transform playerCamera; // Reference to the camera transform
     public float cameraPitchLimit = 90.0f; // Limit to how far up or down the camera can look
@@ -84,15 +87,23 @@ public class FirstPersonController : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal"); // Get input from the horizontal axis (A/D or Left/Right arrow keys)
         float vertical = Input.GetAxis("Vertical"); // Get input from the vertical axis (W/S or Up/Down arrow keys)
 
+        bool isSprinting = Input.GetKey(KeyCode.LeftShift);
+        float targetSpeed = isSprinting ? sprintSpeed : movementSpeed;
+
         Vector3 moveDirection = transform.right * horizontal + transform.forward * vertical; // Calculate the movement direction
         
-        controller.Move(moveDirection * movementSpeed * Time.deltaTime); // Move the character controller
+        controller.Move(moveDirection * targetSpeed * Time.deltaTime); // Move the character controller
         
         velocity.y += gravity * Time.deltaTime;
         // Debug.Log(velocity.y);
         
         controller.Move(velocity * Time.deltaTime);
     }
+
+    // void Sprint ()
+    // {
+        
+    // }
 
 
    
