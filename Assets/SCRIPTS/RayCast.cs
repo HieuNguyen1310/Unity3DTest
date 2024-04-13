@@ -1,71 +1,100 @@
 using System.Collections;
 using System.Collections.Generic;
-// using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class RayCast : MonoBehaviour
 {
     [SerializeField] LayerMask layerMask;
-
     public float rayLength = 20f;
 
     RaycastHit hitInfo;
 
-    AppearRayCastTrigger currentTarget;
+    DisappearRaycastTrigger currentDisappearTarget;
+    AppearRayCastTrigger currentAppearTarget;
 
     public delegate void PlayerTriggerState(bool inside);
     public event PlayerTriggerState OnPlayerTriggerStatedChange;
 
-    // Update is called once per frame
     void Update()
-    {   
-
+    {
         Ray ray = new Ray(transform.position, transform.TransformDirection(Vector3.forward));
 
-        if (Physics.Raycast(ray, out hitInfo, rayLength, layerMask, QueryTriggerInteraction.Collide ))
+        if (Physics.Raycast(ray, out hitInfo, rayLength, layerMask, QueryTriggerInteraction.Collide))
         {
-            Debug.Log("hit! " + hitInfo.transform.name);
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitInfo.distance, Color.red);
 
-            AppearRayCastTrigger target = hitInfo.transform.GetComponent<AppearRayCastTrigger>();
-              if (target != null)
+            // Check for DisappearRayCastTrigger
+            DisappearRaycastTrigger disappearTarget = hitInfo.transform.GetComponent<DisappearRaycastTrigger>();
+            if (disappearTarget != null)
             {
-                Debug.Log("Target accessed: " + target.name);
-                // Check if it's a new target or the current one we're keeping active
-                if (target != currentTarget)
-                {
-                    if (currentTarget != null)
-                    {
-                        currentTarget.StopDisableCoroutine();
-                    }
-                    currentTarget = target;
-                    currentTarget.Appear();
-                }
+                ManageDisappearTarget(disappearTarget);
+            }
 
-                // If it's the current target and still being hit, reset the coroutine
-                if (currentTarget == target)
-                {
-                    currentTarget.StartDisableCoroutine();
-                }
-            } 
+            // Check for AppearRayCastTrigger
+            AppearRayCastTrigger appearTarget = hitInfo.transform.GetComponent<AppearRayCastTrigger>();
+            if (appearTarget != null)
+            {
+                ManageAppearTarget(appearTarget);
+            }
 
         }
         else
         {
-            // Debug.Log("Nothing");
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * rayLength, Color.green);
-            if (currentTarget != null) 
+
+            // Manage when not hitting anything
+            if (currentDisappearTarget != null)
             {
-                currentTarget.StartDisableCoroutine();
+                currentDisappearTarget.StartReappearCoroutine();
+                currentDisappearTarget = null;
             }
-            currentTarget = null;
+            if (currentAppearTarget != null)
+            {
+                currentAppearTarget.StartDisableCoroutine();
+                currentAppearTarget = null;
+            }
         }
 
         if (OnPlayerTriggerStatedChange != null)
         {
-            OnPlayerTriggerStatedChange(currentTarget != null);
+            // Notify if either type of target is being hit
+            OnPlayerTriggerStatedChange(currentDisappearTarget != null || currentAppearTarget != null);
         }
     }
 
-   
+    void ManageDisappearTarget(DisappearRaycastTrigger disappearTarget)
+    {
+        if (disappearTarget != currentDisappearTarget)
+        {
+            if (currentDisappearTarget != null)
+            {
+                currentDisappearTarget.StopReappearCoroutine();
+            }
+            currentDisappearTarget = disappearTarget;
+            currentDisappearTarget.meshRenderer.enabled = false; // Hide immediately
+            currentDisappearTarget.isMeshRendererEnabled = false;
+            currentDisappearTarget.StartReappearCoroutine();
+        }
+        else // Hitting the same target
+        {
+            currentDisappearTarget.StartReappearCoroutine(); // Reset the timer
+        }
+    }
+
+    void ManageAppearTarget(AppearRayCastTrigger appearTarget)
+    {
+        if (appearTarget != currentAppearTarget)
+        {
+            if (currentAppearTarget != null)
+            {
+                currentAppearTarget.StopDisableCoroutine();
+            }
+            currentAppearTarget = appearTarget;
+            currentAppearTarget.Appear();
+        }
+        else // Hitting the same target
+        {
+            currentAppearTarget.StartDisableCoroutine(); // Reset the timer
+        }
+    }
 }

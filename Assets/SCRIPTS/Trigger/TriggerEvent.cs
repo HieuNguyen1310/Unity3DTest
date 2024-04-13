@@ -10,6 +10,8 @@ public class TriggerEvent : MonoBehaviour
 
     [SerializeField] UnityEvent _onTriggerEnter;
 
+    [SerializeField] UnityEvent _onTriggerStay;
+
     [SerializeField] UnityEvent _onTriggerExit;
 
 
@@ -17,6 +19,12 @@ public class TriggerEvent : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(_tagFilter) && !other.gameObject.CompareTag(_tagFilter)) return;
         _onTriggerEnter.Invoke();
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (!string.IsNullOrEmpty(_tagFilter) && !other.gameObject.CompareTag(_tagFilter)) return;
+        _onTriggerStay.Invoke();
     }
 
     void OnTriggerExit(Collider other)

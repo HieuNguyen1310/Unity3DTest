@@ -40,6 +40,34 @@ MonoBehaviour:
   maxNits:
     m_OverrideState: 0
     m_Value: 1000
+--- !u!114 &-5134634855024293319
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e1dc532bcb41949b58bc4f2abfbb7e, type: 3}
+  m_Name: LensDistortion
+  m_EditorClassIdentifier: 
+  active: 1
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.48
+  xMultiplier:
+    m_OverrideState: 0
+    m_Value: 1
+  yMultiplier:
+    m_OverrideState: 0
+    m_Value: 1
+  center:
+    m_OverrideState: 0
+    m_Value: {x: 0.5, y: 0.5}
+  scale:
+    m_OverrideState: 1
+    m_Value: 1
 --- !u!114 &-4174227228475161917
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -256,28 +284,6 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
---- !u!114 &-3703020652851124512
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5485954d14dfb9a4c8ead8edb0ded5b1, type: 3}
-  m_Name: LiftGammaGain
-  m_EditorClassIdentifier: 
-  active: 1
-  lift:
-    m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: 0}
-  gamma:
-    m_OverrideState: 1
-    m_Value: {x: 0.9452069, y: 0.7317424, z: 1, w: -0.07255138}
-  gain:
-    m_OverrideState: 1
-    m_Value: {x: 1, y: 0.86862564, z: 0.89817566, w: -0.20337631}
 --- !u!114 &-2348383493807747269
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -293,10 +299,10 @@ MonoBehaviour:
   active: 1
   postExposure:
     m_OverrideState: 1
-    m_Value: 5.68
+    m_Value: 4.29
   contrast:
     m_OverrideState: 1
-    m_Value: 26
+    m_Value: -2
   colorFilter:
     m_OverrideState: 0
     m_Value: {r: 1, g: 1, b: 1, a: 1}
@@ -306,6 +312,25 @@ MonoBehaviour:
   saturation:
     m_OverrideState: 0
     m_Value: 0
+--- !u!114 &-1644185777894482208
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb60a22f311433c4c962b888d1393f88, type: 3}
+  m_Name: PaniniProjection
+  m_EditorClassIdentifier: 
+  active: 1
+  distance:
+    m_OverrideState: 1
+    m_Value: 0.344
+  cropToFit:
+    m_OverrideState: 1
+    m_Value: 0.82
 --- !u!114 &-403142305258207907
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -339,10 +364,10 @@ MonoBehaviour:
     m_Value: 1.92
   aperture:
     m_OverrideState: 1
-    m_Value: 5.6
+    m_Value: 32
   focalLength:
     m_OverrideState: 1
-    m_Value: 49.78
+    m_Value: 33
   bladeCount:
     m_OverrideState: 0
     m_Value: 5
@@ -365,13 +390,15 @@ MonoBehaviour:
   m_Name: PProcessing
   m_EditorClassIdentifier: 
   components:
-  - {fileID: -3703020652851124512}
   - {fileID: -403142305258207907}
   - {fileID: -7664751207882544967}
   - {fileID: -2348383493807747269}
   - {fileID: -4174227228475161917}
   - {fileID: 1484846075679693912}
   - {fileID: 8483258597271364129}
+  - {fileID: 7999714494441490026}
+  - {fileID: -1644185777894482208}
+  - {fileID: -5134634855024293319}
 --- !u!114 &1484846075679693912
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -393,13 +420,38 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.25
+    m_Value: 0.367
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.347
+    m_Value: 0.842
   rounded:
     m_OverrideState: 0
     m_Value: 0
+--- !u!114 &7999714494441490026
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fa0085f50d5e54f8144f766051a691, type: 3}
+  m_Name: FilmGrain
+  m_EditorClassIdentifier: 
+  active: 1
+  type:
+    m_OverrideState: 1
+    m_Value: 5
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.641
+  response:
+    m_OverrideState: 1
+    m_Value: 0.43
+  texture:
+    m_OverrideState: 0
+    m_Value: {fileID: 0}
 --- !u!114 &8483258597271364129
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -415,4 +467,4 @@ MonoBehaviour:
   active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.078
+    m_Value: 0.492
