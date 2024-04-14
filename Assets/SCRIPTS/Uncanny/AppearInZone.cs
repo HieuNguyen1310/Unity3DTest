@@ -4,40 +4,80 @@ using UnityEngine;
 
 public class AppearInZone : MonoBehaviour
 {
-    private bool isActive = false;
+    public GameObject _childObject;
 
-    [SerializeField] List<GameObject> childrenToAppear;
+    public Transform uncannyTrigger;
 
-    private void Start()
+    public Collider triggerCollider;
+
+    public bool _useColliderRadius = true;
+
+    private float triggerRadius;
+
+    // Start is called before the first frame update
+    void Start()
     {
-        foreach (GameObject child in childrenToAppear) 
-        {
-            child.SetActive(isActive);
-        }
-    }
+        _childObject.SetActive(false);
 
-    void OnTriggerEnter(Collider other)
-    {
-        
-        if (other.CompareTag("UncannyTrigger"))
+        if (_useColliderRadius && triggerCollider != null )
         {
-            foreach(GameObject child in childrenToAppear)
             {
-                isActive = true;
-                child.SetActive(isActive);
+                // Get the radius based on collider type
+                if (triggerCollider is SphereCollider)
+                {
+                    triggerRadius = ((SphereCollider)triggerCollider).radius * triggerCollider.transform.localScale.x; // Scale also considered 
+                }
+                else if (triggerCollider is BoxCollider)
+                {
+                    triggerRadius = triggerCollider.bounds.extents.magnitude; // Approximate radius for boxes
+                }
+                else
+                {
+                    Debug.LogWarning("Unsupported collider type. Using default radius.");
+                }
             }
         }
     }
 
-    void OnTriggerExit(Collider other)
+    // Update is called once per frame
+
+    void Update()
     {
-        if (other.CompareTag("UncannyTrigger"))
+        // Assuming you have a reference to the "UncannyTrigger" object:
+        float distance = Vector3.Distance(transform.position, uncannyTrigger.position);
+
+        if (distance <= triggerRadius)
         {
-            foreach (GameObject child in childrenToAppear)
-            {
-                isActive = false;
-                child.SetActive(isActive);
-            }
+            _childObject.SetActive(true);
+            //Debug.Log("IN");
+        }
+        else
+        {
+            _childObject.SetActive(false);
+            //Debug.Log("OUT");
         }
     }
+    //void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("UncannyTrigger"))
+    //    {
+    //        _childObject.SetActive(true);
+    //        Debug.Log("IN");
+    //    }
+    //}
+
+    //void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("UncannyTrigger"))
+    //    {
+    //        _childObject.SetActive(false);
+    //        Debug.Log("OUT");
+    //    }
+    //}
+
+    //public void RequestChildDeactivation()
+    //{
+    //    _childObject.SetActive(false);
+    //    Debug.Log("Received deactivation signal from child");
+    //}
 }

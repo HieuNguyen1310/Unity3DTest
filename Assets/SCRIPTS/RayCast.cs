@@ -22,12 +22,14 @@ public class RayCast : MonoBehaviour
         if (Physics.Raycast(ray, out hitInfo, rayLength, layerMask, QueryTriggerInteraction.Collide))
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hitInfo.distance, Color.red);
+            //Debug.Log("Raycast hit: " + hitInfo.collider.gameObject.name);
 
             // Check for DisappearRayCastTrigger
             DisappearRaycastTrigger disappearTarget = hitInfo.transform.GetComponent<DisappearRaycastTrigger>();
             if (disappearTarget != null)
             {
                 ManageDisappearTarget(disappearTarget);
+                //Debug.Log("HIT ON DISAPPEAR");
             }
 
             // Check for AppearRayCastTrigger
@@ -79,6 +81,7 @@ public class RayCast : MonoBehaviour
         {
             currentDisappearTarget.StartReappearCoroutine(); // Reset the timer
         }
+        //Debug.Log("DISAPPEAR WORK");
     }
 
     void ManageAppearTarget(AppearRayCastTrigger appearTarget)

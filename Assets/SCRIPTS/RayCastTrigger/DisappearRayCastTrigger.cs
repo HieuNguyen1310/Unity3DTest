@@ -26,6 +26,8 @@ public class DisappearRaycastTrigger : MonoBehaviour
         {
             rayCastScripts.OnPlayerTriggerStatedChange += SetPlayerInTrigger;
         }
+
+        Debug.Log("DisappearRaycastTrigger script: Start function");
     }
 
     public void SetPlayerInTrigger(bool inside)
@@ -41,9 +43,17 @@ public class DisappearRaycastTrigger : MonoBehaviour
             isMeshRendererEnabled = false;
             StartReappearCoroutine();
             disAppearCounter += 1;
+
+
+            //NotifyParentForDeactivate();
             Debug.Log("MeshRenderer Disabled!");
         }
     }
+
+    //private void NotifyParentForDeactivate()
+    //{
+    //    transform.parent.GetComponent<AppearInZone>()?.RequestChildDeactivation();
+    //}
 
     public void StartReappearCoroutine()
     {
